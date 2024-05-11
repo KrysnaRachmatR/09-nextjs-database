@@ -18,14 +18,16 @@ async function seedUsers(client) {
 
     // Insert data into the "users" table
     const insertedUsers = await Promise.all(
-      users.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        return client.sql`
-      INSERT INTO users (name, email, password)
-      VALUES (${user.name}, ${user.email}, ${hashedPassword})
-      ON CONFLICT (email) DO NOTHING;
-    `;
-      })
+      console.log("THE USERS ==> ", users);
+      console.log("The Type of =>>", typeof users);
+    //   users.map(async (user) => {
+    //     const hashedPassword = await bcrypt.hash(user.password, 10);
+    //     return client.sql`
+    //   INSERT INTO users (name, email, password)
+    //   VALUES (${user.name}, ${user.email}, ${hashedPassword})
+    //   ON CONFLICT (email) DO NOTHING;
+    // `;
+    //   })
     );
 
     console.log(`Seeded ${insertedUsers.length} users`);
