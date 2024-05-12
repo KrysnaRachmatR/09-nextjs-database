@@ -9,3 +9,9 @@ mengkonfigurasikan repository 09-nextjs-database, dengan vercel untuk dideploy
 ```
 
 ```
+
+3. ![alt text](image-2.png)
+
+```
+
+```

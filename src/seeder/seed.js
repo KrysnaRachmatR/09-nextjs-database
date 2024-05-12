@@ -1,6 +1,7 @@
 const { db } = require("@vercel/postgres");
-require("./data.js");
+const { invoices, customers, revenue, users } = require("./data.js");
 const bcrypt = require("bcrypt");
+
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -18,16 +19,14 @@ async function seedUsers(client) {
 
     // Insert data into the "users" table
     const insertedUsers = await Promise.all(
-      console.log("THE USERS ==> ", users);
-      console.log("The Type of =>>", typeof users);
-    //   users.map(async (user) => {
-    //     const hashedPassword = await bcrypt.hash(user.password, 10);
-    //     return client.sql`
-    //   INSERT INTO users (name, email, password)
-    //   VALUES (${user.name}, ${user.email}, ${hashedPassword})
-    //   ON CONFLICT (email) DO NOTHING;
-    // `;
-    //   })
+      users.map(async (user) => {
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        return client.sql`
+        INSERT INTO users (id, name, email, password)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        ON CONFLICT (id) DO NOTHING;
+      `;
+      })
     );
 
     console.log(`Seeded ${insertedUsers.length} users`);
